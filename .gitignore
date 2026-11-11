@@ -1,0 +1,11 @@
+.qa/
+asset-sheet.jpg
+node_modules/
+.env
+.env.*
+.vercel/
+*.pem
+*.key
+*.p12
+*.pfx
+*.log

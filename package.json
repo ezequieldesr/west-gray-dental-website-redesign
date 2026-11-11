@@ -1,0 +1,5 @@
+{
+  "name": "west-gray-dental-redesign",
+  "private": true,
+  "scripts": { "build": "node build.cjs", "start": "node serve.cjs", "check": "node check.cjs", "check:security": "node security-check.cjs", "test:security": "node --test security.test.cjs" }
+}

@@ -1,0 +1,18 @@
+# Build from source; never upload local browser state or secret files.
+.git
+.qa
+.agents
+.codex
+.aws
+.vercel
+node_modules
+west-gray-dental/dist
+asset-sheet.jpg
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.log
+**/cookies.txt
