@@ -34,6 +34,17 @@ document.querySelectorAll('.load-map').forEach(button=>button.addEventListener('
   frame.title='West Gray Dental at 715 W Gray St., Houston';
   frame.referrerPolicy='no-referrer';
   frame.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups');
-  frame.src='https://maps.google.com/maps?q=West%20Gray%20Dental%20715%20W%20Gray%20St%20Houston&t=&z=15&ie=UTF8&iwloc=&output=embed';
-  button.closest('.map-consent').replaceWith(frame);
+  // Use the original clinic's Share > Embed URL directly, without a host redirect.
+  frame.src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3463.8246323037374!2d-95.39083516032704!3d29.75378812469759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640bf5e96330a4f%3A0xe715506a3ef444e4!2sWG+Dental!5e0!3m2!1sen!2sus!4v1436306738740';
+  const container=button.closest('.map-consent');
+  const fallback=document.createElement('p');
+  fallback.append('Map unavailable? ');
+  const directions=document.createElement('a');
+  directions.href='https://www.google.com/maps/dir/?api=1&destination=West+Gray+Dental+715+W+Gray+St+Houston+TX+77019';
+  directions.textContent='Open directions in Google Maps ↗';
+  directions.target='_blank';
+  directions.rel='noopener noreferrer';
+  fallback.append(directions);
+  container.className='map-loaded';
+  container.replaceChildren(frame,fallback);
 }));

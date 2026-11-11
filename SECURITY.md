@@ -14,7 +14,7 @@ The site has no login, database, server-side submission endpoint, analytics SDK,
 - Source URL configuration must be an HTTPS origin without credentials, path, query, fragment, or custom port. Metadata is HTML encoded, and structured JSON cannot terminate its script data block.
 - `.vercelignore` and `.gitignore` exclude browser profiles, environment files, credentials, and local tools. The build audits output for unexpected/private files, symlinks, active SVG content, and some recognizable credential patterns. This check is not a comprehensive secret scanner.
 - Contact and appointment forms declare POST, have no JavaScript-free GET fallback, and ship with disabled submit buttons. JavaScript installs the prevent-default handler before enabling them. CSP blocks native submissions as a second layer. No entered information is added to the website URL or logged by the application.
-- Maps require a visitor click before Google receives an embed request. The frame uses no referrer and a sandbox without permission to navigate the top-level page. Its own internal activity is controlled by Google; the site’s CSP does not govern the contents of a cross-origin frame.
+- Maps require a visitor click before Google receives an embed request. The clinic’s original `https://www.google.com/maps/embed` address is explicitly allowed by CSP, avoiding the old `maps.google.com` host redirect. The frame uses no referrer and a sandbox without permission to navigate the top-level page. A separate directions link remains available if the map fails. Its own internal activity is controlled by Google; the site’s CSP does not govern the contents of a cross-origin frame.
 - Preview deployments remain `noindex` even when `SITE_URL` is configured. Robots directives limit indexing; they are **not access controls**.
 
 ## Email and health information
@@ -35,6 +35,8 @@ npm run test:security
 The build verifies 28 pages and local links. Security tests exercise malicious deployment URLs, output encoding, credential/private-file rejection, active SVG rejection, headers, method restrictions, and traversal boundaries. Headless Chrome checked all pages at mobile/tablet/desktop widths under the configured headers, plus all interactions, reduced motion, and no-JavaScript behavior. Browser security checks verify that normal interactions do not trigger CSP violations, injected inline scripts are blocked, maps are opt-in and sandboxed, and forms fail closed without JavaScript.
 
 These are local checks using the same header values as Vercel. Headers and routing still need verification on the actual deployment; none has been created in this task.
+
+Map regression check: the clinic’s original embed URL now matches the exact CSP frame allowlist, with the consent gate, sandbox, and persistent directions fallback tested in Chrome. This execution environment denies external browser network access (`ERR_NETWORK_ACCESS_DENIED`), so live Google map tiles could not be visually verified here.
 
 ## Publish on Vercel
 
